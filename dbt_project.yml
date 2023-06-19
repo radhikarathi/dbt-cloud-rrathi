@@ -31,6 +31,14 @@ clean-targets:         # directories to be removed by `dbt clean`
 # In this example config, we tell dbt to build all models in the example/ directory
 # as tables. These settings can be overridden in the individual model files
 # using the `{{ config(...) }}` macro.
+#on-run-start: " {{generate_sequences() }}"
+
 models:
   jaffle_shop:
     +materialized: table
+    
+tests:
+    +store_failures: true 
+
+vars:
+  surrogate_key_treat_nulls_as_empty_strings: true #turn on legacy behaviour

@@ -3,6 +3,9 @@ version: 2
 models:
   - name: customers
     description: One record per customer
+   # config:
+   #   meta:
+   #     surrogate_key: true
     columns:
       - name: customer_id
         description: Primary key
@@ -18,7 +21,7 @@ models:
       - name: customer_id
         description: Primary key
         tests:
-          - unique
+          - unique            
           - not_null
 
   - name: stg_orders
