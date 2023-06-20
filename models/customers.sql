@@ -1,8 +1,15 @@
-{{
-  config(
-    materialized='view'
-  )
-}}
+
+{{ config(
+    materialized='incremental',
+    unique_key = ['customer_id'],
+    merge_exclude_columns = ['first_order_date','customer_id','sk_customer_id'],
+    post_hook=[
+      "update {{this}} set sk_customer_id = {{ increment_sequence() }} where sk_customer_id = 999"
+    ]
+) }}
+
+
+       
 
 with customers as (
 
@@ -33,9 +40,11 @@ customer_orders as (
 final as (
 
     select
+        999::number(10,0) as sk_customer_id ,
         customers.customer_id,
         customers.first_name,
         customers.last_name,
+        customers.div_name,
         customer_orders.first_order_date,
         customer_orders.most_recent_order_date,
         coalesce(customer_orders.number_of_orders, 0) as number_of_orders

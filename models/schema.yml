@@ -3,9 +3,9 @@ version: 2
 models:
   - name: customers
     description: One record per customer
-   # config:
-   #   meta:
-   #     surrogate_key: true
+    # config:
+    #  meta:
+    #    surrogate_key: true
     columns:
       - name: customer_id
         description: Primary key
@@ -21,12 +21,13 @@ models:
       - name: customer_id
         description: Primary key
         tests:
-          - unique            
+          - unique
+                     
           - not_null
-      - name: first_name
-        description: Primary key
-        tests:
-          - unique            
+      # - name: first_name
+      #   description: Primary key
+      #   tests:
+      #     - unique            
 
   - name: stg_orders
     description: This model cleans up order data
@@ -40,3 +41,15 @@ models:
         tests:
           - accepted_values:
               values: ['placed', 'shipped', 'completed', 'return_pending', 'returned']
+  
+  - name: is_odd_select
+    description: test for odd column
+    columns:
+      - name: col_name
+        tests:
+          - warn_if_odd
+              # severity: error   # overrides
+
+
+
+
