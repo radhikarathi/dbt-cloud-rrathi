@@ -1,1 +1,0 @@
-{{ reject_null('raw','jaffle_shop','customers_sin','first_name') }}

@@ -1,4 +1,4 @@
-{% macro reject_null_1(db='raw', schema_nm='jaffle_shop', table_name='customers_sin', field='first_name') %}
+{% macro reject_null(db, schema_nm, table_name, field) %}
 
     {{ config(severity="warn") }}
 
@@ -14,11 +14,21 @@
 {% set results = run_query(column_query) %}
 
 {% if execute %}
-    {# Return the first column #}
-    {% set results_list = results.columns[0].values() %}
+{# Return the first column #}
+{% set results_list = results.columns[0].values() %}
 {% else %} {% set results_list = [] %}
 {% endif %}
 
-return results_list
+select          
+
+{%- for column_name_v in results_list %}
+{{column_name_v}} as {{column_name_v}},
+{% endfor %}
+'R' as reject_flg
+from {{ db }}.{{ schema_nm }}.{{ table_name }}
+where {{ field }} is null or {{ field }} = ''
+
+
 
 {% endmacro %}
+

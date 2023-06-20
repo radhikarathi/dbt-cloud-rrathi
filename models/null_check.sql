@@ -1,1 +1,0 @@
-select 1 as col_name, null as col2
