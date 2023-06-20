@@ -3,9 +3,9 @@ version: 2
 models:
   - name: customers
     description: One record per customer
-    # config:
-    #  meta:
-    #    surrogate_key: true
+    config:
+     meta:
+       surrogate_key: true
     columns:
       - name: customer_id
         description: Primary key
@@ -17,6 +17,9 @@ models:
 
   - name: stg_customers
     description: This model cleans up customer data
+    config:
+     meta:
+       surrogate_key: true
     columns:
       - name: customer_id
         description: Primary key
@@ -31,6 +34,9 @@ models:
 
   - name: stg_orders
     description: This model cleans up order data
+    config:
+     meta:
+       surrogate_key: true
     columns:
       - name: order_id
         description: Primary key
@@ -49,7 +55,11 @@ models:
         tests:
           - warn_if_odd
               # severity: error   # overrides
-
+  - name: stg_customers_rejection
+    description: This model captures rejected rows from raw customers table using macro
+    config:
+     meta:
+       surrogate_key: true
 
 
 
