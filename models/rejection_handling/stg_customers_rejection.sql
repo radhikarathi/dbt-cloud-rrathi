@@ -1,3 +1,3 @@
-
-{{ reject_flg_ind_dynamic('raw.jaffle_shop.customers_sin','first_name') }}
+{%- set tbl_nm = 'raw.jaffle_shop.customers_'+ var("div_name") -%}
+{{ reject_flg_ind_dynamic(tbl_nm,'first_name') }}
 
