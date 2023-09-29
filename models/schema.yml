@@ -1,5 +1,27 @@
 version: 2
 
+sources:
+  - name: INPUT_SRC
+    database: RAW
+    # schema: INPUT_SRC
+    tables:
+    - name: ext_table_rr_col
+      description: test for odd column
+      columns:
+      - name: id
+        tests:
+          - unique:
+              severity: error   # overrides
+          - warn_if_odd_rej_tbl:
+              severity: warn
+              
+      
+
+    
+    config:
+      enabled: true
+  
+
 models:
   - name: customers
     description: One record per customer
@@ -11,6 +33,7 @@ models:
         description: Primary key
         tests:
           - unique
+
           - not_null
       - name: first_order_date
         description: NULL when a customer has not yet placed an order.
@@ -24,8 +47,7 @@ models:
       - name: customer_id
         description: Primary key
         tests:
-          - unique
-                     
+          - unique             
           - not_null
       # - name: first_name
       #   description: Primary key
@@ -53,8 +75,9 @@ models:
     columns:
       - name: col_name
         tests:
-          - warn_if_odd
-              # severity: error   # overrides
+          - not_null_udf
+          # - warn_if_odd
+          #     # severity: error   # overrides
   - name: stg_customers_rejection
     description: This model captures rejected rows from raw customers table using macro
     config:

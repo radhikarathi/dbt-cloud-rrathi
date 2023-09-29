@@ -1,1 +1,1 @@
-select 5 as col_name
+select null as col_name
